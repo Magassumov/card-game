@@ -1,0 +1,192 @@
+body {
+    font-family: "Dela Gothic One", sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Центрирование всех элементов по горизонтали */
+    justify-content: flex-start; /* Элементы располагаются сверху вниз */
+    min-height: 100vh; /* Высота страницы для обеспечения центрирования */
+    position: relative;
+    background: rgba(0, 0, 0, 0.7);
+  }
+  
+  h1 {
+    font-family: "Dela Gothic One", sans-serif;
+    font-size: 5vw;
+    color: #c31d00;
+    text-transform: uppercase;
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.8);
+    letter-spacing: 2px;
+    background-color: rgba(255, 255, 255, 0.9); /* Полупрозрачный фон для заголовка */
+    padding: 10px;
+    border-radius: 15px;
+    display: inline-block;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.9);
+    margin: 20px 0;
+  }
+  
+  /* Таймер под заголовком */
+  #timer {
+    font-size: 3vw;
+    font-weight: bold;
+    color: black;
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+    display: inline-block;
+    margin: 10px 0;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8);
+  }
+  
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Центрирование элементов по горизонтали */
+    width: 100%;
+  }
+  
+  .game-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: auto;
+    border: 5px solid rgba(255, 255, 255, 0.9); /* Рамка вокруг игрового поля */
+    border-radius: 15px;
+    background-color: rgba(0, 0, 0, 0.3); /* Полупрозрачный фон */
+    padding: 20px;
+    margin: 20px 0;
+  }
+  
+  .game-board {
+    display: grid;
+    grid-template-columns: repeat(5, 100px); /* 5 колонок на ПК */
+    grid-template-rows: repeat(4, 100px); /* 4 ряда */
+    grid-gap: 10px; /* Отступы между карточками */
+    justify-items: center; /* Центрирование карточек внутри ячеек */
+    align-items: center;
+  }
+  
+  .card {
+    width: 100px;
+    height: 100px;
+    background-color: #3498db;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 10px;
+    font-size: 24px;
+  }
+  
+  .card.flipped {
+    background-color: #ffffffdc;
+  }
+  
+  .card.matched {
+    visibility: hidden;
+  }
+  
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    z-index: -1;
+    opacity: 0.7;
+  }
+  
+  /* Адаптивные настройки для мобильных устройств */
+  @media (max-width: 768px) {
+    .game-board {
+      grid-template-columns: repeat(4, 100px); /* 4 колонки на мобильных устройствах */
+      grid-template-rows: repeat(5, 100px); /* 5 рядов */
+    }
+  
+    .card {
+      font-size: 20px;
+    }
+  
+    h1 {
+      font-size: 7vw;
+    }
+  
+    #timer {
+      font-size: 5vw;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .game-board {
+      grid-template-columns: repeat(4, 80px); /* 4 колонки по 80px на маленьких экранах */
+      grid-template-rows: repeat(5, 80px); /* 5 рядов */
+      grid-gap: 5px;
+    }
+  
+    .card {
+      width: 80px;
+      height: 80px;
+      font-size: 18px;
+    }
+  
+    h1 {
+      font-size: 8vw;
+    }
+  
+    #timer {
+      font-size: 6vw;
+    }
+  }
+  
+  #win-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute; /* Позволяет разместить сообщение поверх игрового поля */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8);
+    z-index: 10; /* Поверх всех остальных элементов */
+  }
+  
+  .game-board.hidden {
+    visibility: hidden; /* Скрывает карточки, когда игра закончена */
+  }
+  
+  
+  #win-message h2 {
+    font-size: 6vw;
+    color: #e22222;
+    margin-bottom: 20px;
+    text-align: center; /* Центрирование текста */
+  }
+  
+  #restart-btn {
+    font-size: 4vw;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8);
+  }
+  
+  #restart-btn:hover {
+    background-color: #0056b3;
+  }
+  
