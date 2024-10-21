@@ -6,7 +6,9 @@ let timerElement = document.getElementById('timer');
 let seconds = 0;
 let timerInterval;
 let gameStarted = false;
+let gameInProgress = false; // Новый флаг для отслеживания состояния игры
 let restartBtn = document.getElementById('restart-btn');
+let startBtn = document.getElementById('start-btn'); // Кнопка Старт
 let winMessage = document.getElementById('win-message');
 
 // Генерируем массив из 10 пар чисел
@@ -26,6 +28,24 @@ function createCards(numbers) {
         gameBoard.appendChild(card);
         card.addEventListener('click', flipCard);
     });
+}
+
+// Показать все карточки с числами на 3 секунды
+function showCardsForAWhile() {
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+        card.classList.add('flipped');
+        card.textContent = card.getAttribute('data-value');
+    });
+
+    // Закрываем карточки обратно через 3 секунды
+    setTimeout(() => {
+        cards.forEach(card => {
+            card.classList.remove('flipped');
+            card.textContent = '';
+        });
+        gameInProgress = true; // Игра начинается после того, как карточки закрылись
+    }, 5000);
 }
 
 // Функция для старта таймера
@@ -53,9 +73,10 @@ function stopTimer() {
 
 // Логика переворота карточек
 function flipCard() {
-    startTimer();
-    if (lockBoard) return;
+    if (!gameInProgress || lockBoard) return; // Игра должна быть запущена и не заблокирована
     if (this === firstCard) return;
+
+    startTimer();
 
     this.classList.add('flipped');
     this.textContent = this.getAttribute('data-value');
@@ -126,8 +147,15 @@ function restartGame() {
     seconds = 0; // Сбрасываем таймер
     timerElement.textContent = '00:00';
     gameStarted = false;
+    gameInProgress = false; // Игра ещё не началась
     numbers = numbers.sort(() => 0.5 - Math.random()); // Перемешиваем карточки
     createCards(numbers); // Пересоздаем карточки
 }
+
+// Старт игры по нажатию кнопки "Старт"
+startBtn.addEventListener('click', () => {
+    showCardsForAWhile();
+    startBtn.style.display = 'none'; // Скрываем кнопку Старт после начала игры
+});
 
 restartBtn.addEventListener('click', restartGame);
