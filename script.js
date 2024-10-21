@@ -144,6 +144,7 @@ function resetBoard() {
 function restartGame() {
     winMessage.style.display = 'none'; // Скрываем сообщение о победе
     gameBoard.classList.remove('hidden'); // Показываем игровое поле
+    startBtn.style.display = 'block'; // Возвращаем кнопку Старт
     seconds = 0; // Сбрасываем таймер
     timerElement.textContent = '00:00';
     gameStarted = false;
@@ -158,4 +159,5 @@ startBtn.addEventListener('click', () => {
     startBtn.style.display = 'none'; // Скрываем кнопку Старт после начала игры
 });
 
+// Перезапуск игры по нажатию кнопки "Повторим?"
 restartBtn.addEventListener('click', restartGame);
